@@ -16,15 +16,17 @@ FPATH = os.path.dirname(os.path.realpath(__file__))
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
+        
         # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
+        print("base: "+base_path)
     except Exception:
         base_path = os.path.abspath(".")
-
+    print("bitmaps: "+base_path)
     return os.path.join(base_path, relative_path)
 
 
-def parse_captcha(img):
+def parse_captcha(img,bitmapPath):
 
     captcha = ""
 
@@ -39,9 +41,9 @@ def parse_captcha(img):
     img_matrix = img.convert('L').load()
 
     #bitmaps_fpath = os.path.join(FPATH, "bitmaps.json")
-    bitmaps_fpath = resource_path("bitmaps.json")
+    #bitmaps_fpath = resource_path("bitmaps.json")
 
-    bitmaps = json.load(open(bitmaps_fpath))
+    bitmaps = json.load(bitmapPath)
     
 
     # remove single pixel width noise + thresholding

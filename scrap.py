@@ -125,18 +125,20 @@ def resource_path(relative_path):
         base_path = sys._MEIPASS
     except Exception:
         base_path = abspath(".")
-
+    #print (join(base_path, relative_path))
     return join(base_path, relative_path)
 
 
 #if isfile():
-if exists(resource_path('config.json')):
-    with open(resource_path('config.json')) as f:
-        print('Config found')
+#print('config.json')
+if exists('config.json'):
+    with open(('config.json'),'r') as f:
+        print('Existing config found,Using previous credentials.')
         data = load(f)
         reg=data['registeration_no']
         path=data['path']
         pswd=data['password']
+        f.close()
         
 else:
     pathToDownload = input("Enter path to download: ")
@@ -149,7 +151,7 @@ else:
           'registeration_no':reg,
           'password':pswd
           }
-    with open(resource_path('config.json'),'w')  as f:
+    with open('config.json','w')  as f:
               f.write(dumps(data))
               f.flush()
               fsync(f)
@@ -164,7 +166,7 @@ headers = {
 
 cookie = 0
 gsid = 0
-
+print('Please wait...')
 with requests.Session() as s:
     url = "https://vtopbeta.vit.ac.in/vtop/"
     r = s.get(url,headers=headers)
@@ -216,7 +218,7 @@ with requests.Session() as s:
       #print(headers)
       img = Image.open(ipath)
       #print('------WORKED-----')
-      captcha = parse_captcha(img)
+      captcha = parse_captcha(img,open(resource_path("bitmaps.json")))
       if exists(ipath):
           remove(ipath)
       else:
@@ -304,9 +306,9 @@ with requests.Session() as s:
                       #sub['sr'] = td.find('p').text
               count+=1    
               
-      print('############### TIME TABLE ##############')
-      pprint.PrettyPrinter(indent=4).pprint(tt)
-      print('################')
+      #print('############### TIME TABLE ##############')
+      #pprint.PrettyPrinter(indent=4).pprint(tt)
+      #print('################')
       
       
 # =============================================================================
@@ -331,7 +333,7 @@ with requests.Session() as s:
           classid = sub['classNum']
           subname+= " "+sub['courseType']
           countTry = 0
-          print("======Downloading====="+subname)
+          print("Downloading "+subname+"...")
           try:
               countTry+=1
               #print(classid,subname,path)
