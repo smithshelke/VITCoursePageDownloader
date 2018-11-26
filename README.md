@@ -11,4 +11,5 @@ D:/SomwhereHere/OrHere
 5) Enter your password
 6) Enjoy :+1:
 ## Note 
-Sometimes downloads maybe slow, check your internet connection. This script completely depends on your internet connection.
+1) After you login the first time, your credentials will stored in a file called config.json. You can edit that file using notepad to save your preferences and credentials or simply delete it to start fresh.
+2) Sometimes downloads maybe slow, check your internet connection. This script completely depends on your internet connection.
